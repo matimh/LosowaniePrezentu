@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>🎄 Świąteczne Losowanie 🎄</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="snow"></div>
+    <div class="container">
+        <h1>🎄 Świąteczne Losowanie 🎄</h1>
+        <input type="number" id="studentNumber" placeholder="Nr ucznia">
+        <button onclick="checkStudent()">Sprawdź</button>
+        <div id="studentInfo"></div>
+        <button onclick="drawGift()" id="drawButton" style="display: none;">Losuj Prezent</button>
+        <div id="result"></div>
+        <div id="giftEmoji" class="gift-animation" style="display: none;">🎁</div>
+    </div>
+
+    <footer>
+        <p>🎅 Wesołych Świąt! 🎄</p>
+        <p>© 2021-2023 Matimh.fun | Mateusz Mi</p>
+    </footer>
+
+    <script>
+        // Przykładowa baza danych uczniów
+        const students = {
+            1: "os1",
+            2: "os2",
+            3: "os3",
+            4: "os4",
+            5: "os5",
+            6: "os6",
+            7: "os7",
+            8: "os8",
+            9: "os9",
+            10: "os10",
+            11: "os11",
+            12: "os12",
+            13: "os13",
+            14: "os14",
+            15: "os15",
+            15: "os16",
+            16: "os17",
+            17: "os18",
+            18: "os19",
+            19: "os20",
+            20: "os21",
+            21: "os22",
+            22: "os23",
+            23: "os24",
+        };
+
+        // Prezenty z powtórzeniami według specyfikacji
+        const gifts = [
+            // Sprawdzian z zeszytem (x2)
+            "Sprawdzian z zeszytem",
+            "Sprawdzian z zeszytem",
+            
+            // +1 Pkt na sprawdzianie (x3)
+            "gift1",
+            "gift1",
+            "gift1",
+            "gift1",
+            "gift1",
+            "gift1",
+            "gift1",
+            "gift1",
+            "gift1",
+        ];
+
+        // Dodajemy dźwięki
+        const sounds = {
+            tick: new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'),
+            success: new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3')
+        };
+
+        // Ustawiamy głośność dźwięków
+        sounds.tick.volume = 0.3;
+        sounds.success.volume = 0.5;
+
+        function playTickSound() {
+            sounds.tick.currentTime = 0;
+            sounds.tick.play();
+        }
+
+        function playSuccessSound() {
+            sounds.success.currentTime = 0;
+            sounds.success.play();
+        }
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerHTML = '✨';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.setProperty('--tx', (Math.random() * 200 - 100) + 'px');
+            sparkle.style.setProperty('--ty', (Math.random() * 200 - 100) + 'px');
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+
+        function checkStudent() {
+            const number = document.getElementById('studentNumber').value;
+            const studentInfo = document.getElementById('studentInfo');
+            const drawButton = document.getElementById('drawButton');
+            
+            if (students[number]) {
+                studentInfo.innerHTML = `<p>Nr ${number} - ${students[number]}</p>`;
+                drawButton.style.display = 'inline-block';
+                // Dodaj efekt błysku
+                const rect = studentInfo.getBoundingClientRect();
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        createSparkle(rect.left + Math.random() * rect.width, 
+                                    rect.top + Math.random() * rect.height);
+                    }, i * 100);
+                }
+            } else {
+                studentInfo.innerHTML = '<p>Nie znaleziono ucznia o tym numerze</p>';
+                drawButton.style.display = 'none';
+            }
+        }
+
+        function drawGift() {
+            const result = document.getElementById('result');
+            const giftEmoji = document.getElementById('giftEmoji');
+            const drawButton = document.getElementById('drawButton');
+            
+            drawButton.disabled = true;
+            result.innerHTML = 'Losowanie prezentu...';
+            giftEmoji.style.display = 'block';
+            giftEmoji.classList.add('gift-shake');
+
+            // Zaawansowana animacja losowania
+            let counter = 0;
+            const gifts_animation = [...gifts];
+            let speed = 100; // Początkowa szybkość
+            let duration = 4000; // Całkowity czas trwania animacji
+            let startTime = Date.now();
+
+            const interval = setInterval(() => {
+                const currentTime = Date.now() - startTime;
+                const progress = currentTime / duration;
+                
+                // Zwalniamy animację wraz z postępem
+                speed = 100 + Math.floor(progress * 300);
+                
+                const randomIndex = Math.floor(Math.random() * gifts_animation.length);
+                result.innerHTML = `
+                    <div style="font-size: ${1.5 - progress * 0.5}em">
+                        ${gifts_animation[randomIndex]}...
+                    </div>
+                `;
+                
+                // Efekty dźwiękowe i wizualne
+                if (counter % 3 === 0) {
+                    playTickSound();
+                    const rect = result.getBoundingClientRect();
+                    createSparkle(rect.left + Math.random() * rect.width, 
+                                rect.top + Math.random() * rect.height);
+                }
+                
+                counter++;
+                
+                // Jeśli przekroczyliśmy czas trwania, zatrzymujemy animację
+                if (currentTime >= duration) {
+                    clearInterval(interval);
+                    finishAnimation();
+                }
+            }, speed);
+
+            function finishAnimation() {
+                giftEmoji.classList.remove('gift-shake');
+                const randomGift = gifts[Math.floor(Math.random() * gifts.length)];
+                const number = document.getElementById('studentNumber').value;
+                
+                // Efekt końcowy z dźwiękiem
+                playSuccessSound();
+                result.innerHTML = `
+                    <div class="final-gift">
+                        <div class="result-card">
+                            <div class="result-header">🎄 Wynik Losowania 🎄</div>
+                            <div class="result-content">
+                                <p><strong>Nr:</strong> ${number}</p>
+                                <p><strong>Uczeń:</strong> ${students[number]}</p>
+                                <p><strong>Wylosowany prezent:</strong></p>
+                                <p class="gift-highlight">${randomGift}</p>
+                            </div>
+                            <div class="result-footer">
+                                <small>© 2024 Świąteczne Losowanie | Wykonane z ❤️ przez Mateusza MI - Matimh.fun</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                drawButton.disabled = false;
+
+                // Dodatkowe efekty świetlne na końcu
+                const rect = result.getBoundingClientRect();
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        createSparkle(
+                            rect.left + Math.random() * rect.width, 
+                            rect.top + Math.random() * rect.height
+                        );
+                    }, i * 50);
+                }
+            }
+        }
+
+        // Dodanie efektu śniegu
+        function createSnow() {
+            const snow = document.querySelector('.snow');
+            for (let i = 0; i < 50; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.style.position = 'absolute';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animation = `fall ${Math.random() * 3 + 2}s linear infinite`;
+                snowflake.style.opacity = Math.random();
+                snowflake.style.fontSize = '20px';
+                snowflake.innerHTML = '❄';
+                snow.appendChild(snowflake);
+            }
+        }
+
+        createSnow();
+
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes fall {
+                0% { transform: translateY(-100px) rotate(0deg); }
+                100% { transform: translateY(100vh) rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html> 

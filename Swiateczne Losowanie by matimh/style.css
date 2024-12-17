@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Poppins:wght@400;600&display=swap');
+
+:root {
+    --primary-color: #1a472a;
+    --accent-color: #c41e3a;
+    --gold: #e4c988;
+    --white: #ffffff;
+    --dark: #0a1f12;
+}
+
+body {
+    background: var(--primary-color);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-image: 
+        linear-gradient(rgba(26, 71, 42, 0.9), rgba(26, 71, 42, 0.9)),
+        url('https://www.transparenttextures.com/patterns/snow.png');
+    color: var(--white);
+    position: relative;
+    overflow-x: hidden;
+}
+
+.container {
+    text-align: center;
+    padding: 3rem;
+    background: rgba(10, 31, 18, 0.7);
+    border-radius: 20px;
+    margin: 2rem auto 6rem auto;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3),
+                inset 0 0 20px rgba(228, 201, 136, 0.1);
+    backdrop-filter: blur(10px);
+    max-width: 600px;
+    width: 90%;
+    border: 1px solid rgba(228, 201, 136, 0.2);
+}
+
+h1 {
+    font-family: 'Mountains of Christmas', cursive;
+    color: var(--gold);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3),
+                 0 0 20px rgba(228, 201, 136, 0.5);
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+}
+
+input {
+    padding: 12px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: 2px solid var(--gold);
+    margin: 1rem 0;
+    width: 120px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    text-align: center;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 15px var(--gold),
+                inset 0 0 5px rgba(228, 201, 136, 0.5);
+    transform: scale(1.05);
+}
+
+button {
+    background: var(--accent-color);
+    color: var(--white);
+    border: none;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    margin: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(196, 30, 58, 0.3);
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+button:hover::before {
+    left: 100%;
+}
+
+button:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(196, 30, 58, 0.4);
+}
+
+.result-card {
+    background: rgba(10, 31, 18, 0.95);
+    border-radius: 20px;
+    padding: 2.5rem;
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 30px rgba(228, 201, 136, 0.15),
+                inset 0 0 20px rgba(228, 201, 136, 0.05);
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.result-header {
+    font-family: 'Mountains of Christmas', cursive;
+    font-size: 2.2rem;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3),
+                 0 0 15px rgba(228, 201, 136, 0.5);
+    letter-spacing: 2px;
+}
+
+.result-content {
+    text-align: left;
+    margin: 2rem 0;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(228, 201, 136, 0.1);
+}
+
+.result-content p {
+    margin: 1rem 0;
+    font-size: 1.3rem;
+    color: var(--white);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.result-content .gift-highlight {
+    text-align: center;
+    font-size: 2rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: linear-gradient(145deg, 
+        rgba(228, 201, 136, 0.1),
+        rgba(228, 201, 136, 0.05));
+    border-radius: 15px;
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(228, 201, 136, 0.5);
+    border: 1px solid rgba(228, 201, 136, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.result-footer {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(228, 201, 136, 0.2);
+    font-size: 0.9rem;
+    color: var(--gold);
+    opacity: 0.9;
+    text-align: center;
+}
+
+.result-footer small {
+    display: block;
+    line-height: 1.8;
+    letter-spacing: 1px;
+}
+
+footer {
+    background: rgba(10, 31, 18, 0.9);
+    width: 100%;
+    padding: 1.5rem 0;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(228, 201, 136, 0.2);
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+}
+
+footer p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: var(--gold);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
+}
+
+.sparkle {
+    position: absolute;
+    pointer-events: none;
+    animation: sparkle 1.5s linear forwards;
+    font-size: 1.5rem;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.5) translateY(50px) rotateX(-10deg);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.05) translateY(-10px) rotateX(5deg);
+    }
+    100% {
+        transform: scale(1) translateY(0) rotateX(0);
+        opacity: 1;
+    }
+}
+
+.final-gift {
+    animation: popIn 1s ease-out forwards;
+    transform-origin: center;
+    padding: 1rem;
+}
+
+#studentInfo {
+    background: rgba(10, 31, 18, 0.8);
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1.5rem 0;
+    border: 1px solid rgba(228, 201, 136, 0.1);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--gold);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+  </rewritten_file> 
